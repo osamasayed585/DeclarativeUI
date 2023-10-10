@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DeclarativeUI</string>
+    <string name="another_composable_text">another composable text</string>
+    <string name="hello_usama">Hello Usama</string>
+</resources>
