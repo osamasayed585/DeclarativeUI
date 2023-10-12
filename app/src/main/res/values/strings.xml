@@ -2,4 +2,12 @@
     <string name="app_name">DeclarativeUI</string>
     <string name="another_composable_text">another composable text</string>
     <string name="hello_usama">Hello Usama</string>
+    <string name="account">Account</string>
+    <string name="edit_or_mange_your_account">Edit Or Mange Your Account</string>
+    <string name="change_profile_picture">change profile picture</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last Name</string>
+    <string name="location">Location</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.sa.declarativeui.screens
+package com.sa.declarativeui.screens.counter
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,9 +23,11 @@ import com.sa.declarativeui.viewModel.CounterViewModel
 
 @Composable
 fun CounterScreen(viewModel: CounterViewModel = hiltViewModel()) {
-    val state = viewModel.state.collectAsState()
+
+    val state by viewModel.state.collectAsState()
+
     CounterContent(
-        state = state.value.toString(),
+        state = state.toString(),
         onAddClick = viewModel::onIncreaseCounter,
         onMinusClick = viewModel::onDecreaseCounter,
     )

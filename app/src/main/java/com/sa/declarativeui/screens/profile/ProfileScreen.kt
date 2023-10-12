@@ -1,4 +1,4 @@
-package com.sa.declarativeui.screens
+package com.sa.declarativeui.screens.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,11 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.sa.declarativeui.R
 import com.sa.declarativeui.composables.CardText
 import com.sa.declarativeui.composables.Header
@@ -30,21 +32,49 @@ import com.sa.declarativeui.composables.SpacerVertical32
 import com.sa.declarativeui.composables.TextButton
 import com.sa.declarativeui.ui.theme.Rubik
 import com.sa.declarativeui.ui.theme.green
+import com.sa.declarativeui.viewModel.state.ProfileUiState
+import com.sa.declarativeui.viewModel.ProfileViewModel
 
-@Preview(showBackground = true)
+
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    viewModel: ProfileViewModel = hiltViewModel()
+) {
+    val state = viewModel._state
+
+    ProfileContent(
+        state = state,
+        onFirstNameChange = viewModel::onChangeFirstName,
+        onLastNameChange = viewModel::onChangeLastName,
+        onLocationChange = viewModel::onChangeLocation,
+        onEmailChange = viewModel::onChangeEmail,
+        onPhoneChange = viewModel::onChangePhone
+    )
+}
+
+@Composable
+fun ProfileContent(
+    state: ProfileUiState,
+    onFirstNameChange: (String) -> Unit,
+    onLastNameChange: (String) -> Unit,
+    onLocationChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPhoneChange: (String) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Header(title = "Account", subTitle = "Edit Or Mange Your Account")
+        Header(
+            title = stringResource(R.string.account),
+            subTitle = stringResource(R.string.edit_or_mange_your_account)
+        )
         SpacerVertical32()
-        PainterImage(painter = painterResource(id = R.drawable.img_profile))
+        PainterImage(painter = rememberAsyncImagePainter(model = state.image))
         SpacerVertical24()
-        TextButton(text = "change profile picture")
+        TextButton(text = stringResource(R.string.change_profile_picture))
         Row(
             modifier = Modifier.fillMaxWidth(),
         ) {
@@ -53,19 +83,39 @@ fun ProfileScreen() {
                     .weight(0.5f)
                     .padding(end = 8.dp)
             ) {
-                CardText(title = "First name", message = "Osame")
+                CardText(
+                    title = stringResource(R.string.first_name),
+                    message = state.firstName,
+                    onValueChange = onFirstNameChange
+                )
             }
             Box(
                 modifier = Modifier
                     .weight(0.5f)
                     .padding(start = 8.dp)
             ) {
-                CardText(title = "Last Name", message = "Sayed")
+                CardText(
+                    title = stringResource(R.string.last_name),
+                    message = state.lastName,
+                    onValueChange = onLastNameChange
+                )
             }
         }
-        CardText(title = "Location", message = "Cairo, Nasr city")
-        CardText(title = "Email", message = "osama@gmail.com")
-        CardText(title = "Phone", message = "01285692254")
+        CardText(
+            title = stringResource(R.string.location),
+            message = state.location,
+            onValueChange = onLocationChange
+        )
+        CardText(
+            title = stringResource(R.string.email),
+            message = state.email,
+            onValueChange = onEmailChange
+        )
+        CardText(
+            title = stringResource(R.string.phone),
+            message = state.phone,
+            onValueChange = onPhoneChange
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -87,4 +137,17 @@ fun ProfileScreen() {
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun _ProfileContent() {
+    ProfileContent(
+        ProfileUiState(),
+        onFirstNameChange = {},
+        onLastNameChange = {},
+        onLocationChange = {},
+        onEmailChange = {},
+        onPhoneChange = {}
+    )
 }

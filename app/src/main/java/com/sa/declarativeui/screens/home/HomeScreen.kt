@@ -1,4 +1,4 @@
-package com.sa.declarativeui.screens
+package com.sa.declarativeui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
